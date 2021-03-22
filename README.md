@@ -1,2 +1,2 @@
-# -HCProject1
+# HCProject1
 Hyper Casual Game
