@@ -18,7 +18,9 @@ public class Food : MonoBehaviour
 
         col.gameObject.transform.localScale += new Vector3(1, 1, 1);
 
-        if (col.gameObject.transform.localScale.x % 30 == 0)
+        GameManager.instance.UpdateScore();
+
+        if ((col.gameObject.transform.localScale.x % 30).Equals(0))
         {
             GameManager.instance.MapChange();
         }
