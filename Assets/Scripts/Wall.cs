@@ -6,6 +6,16 @@ public class Wall : MonoBehaviour
 {
     private void OnCollisionEnter(Collision col)
     {
-        col.transform.localScale -= new Vector3(5, 5, 5);
+        float playerScale = GameManager.instance.GetPlayerScale();
+
+        if (playerScale - 5 <= 10)
+        {
+            GameManager.instance.SetPlayerScale(playerScale);
+            Debug.Log("게임오버");
+        }
+        else
+        {
+            col.transform.localScale -= new Vector3(5, 5, 5);
+        }
     }
 }

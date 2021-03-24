@@ -7,11 +7,6 @@ public class PlayerMove : MonoBehaviour
     private Vector3 angleAccler = Vector3.zero;
     private Vector3 movement = Vector3.zero;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
 #if UNITY_EDITOR

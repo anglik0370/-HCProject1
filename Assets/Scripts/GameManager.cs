@@ -15,14 +15,14 @@ public class GameManager : MonoBehaviour
 
     private FoodPoolManager foodPool = null;
 
-    [Header("맵")] [SerializeField]
-    private GameObject bowl = null;
-
     [Header("플레이어")] [SerializeField]
     private GameObject player = null;
 
     [Header("점수")]
     private int score = 0;
+
+    [Header("카메라 애니메이터")] [SerializeField]
+    private Animator cameraAnim = null;
 
     public ScoreClass sc;
 
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void MapChange()
     {
+        cameraAnim.Play("CameraUpDown");
         player.transform.localScale = new Vector3(10, 10, 10);
     }
 
@@ -61,8 +62,28 @@ public class GameManager : MonoBehaviour
         scoreText.text = string.Concat("Score : ", score);
     }
 
+    public float GetPlayerScale()
+    {
+        return player.transform.localScale.x;
+    }
+
+    public void SetPlayerScale(float scale)
+    {
+        player.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    public void UpdateHighScore()
+    {
+        if (score > sc.highScore)
+        {
+            sc.highScore = score;
+        }
+    }
+
+    //public IEnumerator 
+
     [ContextMenu("To Json Data")]
-    void SaveHighScore()
+    public void SaveHighScore()
     {
         string jsonData = JsonUtility.ToJson(sc);
         string path = Path.Combine(Application.dataPath, "highScore.json");
@@ -70,7 +91,7 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("Form Json Data")]
-    void LoadHighScore()
+    public void LoadHighScore()
     {
         string path = Path.Combine(Application.dataPath, "highScore.json");
         string jsonData = File.ReadAllText(path);
