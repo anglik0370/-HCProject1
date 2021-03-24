@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [Header("카메라 애니메이터")] [SerializeField]
     private Animator cameraAnim = null;
 
+    public bool canMovePlayer = true;
+
     public ScoreClass sc;
 
     private void Awake()
@@ -40,10 +42,6 @@ public class GameManager : MonoBehaviour
         foodPool.Pooling();
         foodPool.Pooling();
     }
-    void Update()
-    {
-        senserValue = Input.acceleration;
-    }
 
     public int GetScore()
     {
@@ -53,6 +51,7 @@ public class GameManager : MonoBehaviour
     public void MapChange()
     {
         cameraAnim.Play("CameraUpDown");
+        StartCoroutine(StopPlayerMove());
         player.transform.localScale = new Vector3(10, 10, 10);
     }
 
@@ -80,7 +79,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //public IEnumerator 
+    private IEnumerator StopPlayerMove()
+    {
+        canMovePlayer = false;
+        yield return new WaitForSeconds(2f);
+        canMovePlayer = true;
+    }
 
     [ContextMenu("To Json Data")]
     public void SaveHighScore()
