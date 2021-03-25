@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     [Header("UI 관련")] [SerializeField]
     private Text scoreText = null;
+    [SerializeField]
+    private Text highScoreText = null;
 
     private FoodPoolManager foodPool = null;
 
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public bool canMovePlayer = true;
 
-    public ScoreClass sc;
+    public ScoreClass sc = new ScoreClass();
 
     private void Awake()
     {
@@ -41,6 +43,20 @@ public class GameManager : MonoBehaviour
 
         foodPool.Pooling();
         foodPool.Pooling();
+
+        string strFile = string.Concat(Application.persistentDataPath, "/Score.txt");
+        FileInfo fileInfo = new FileInfo(strFile);
+
+        if (fileInfo.Exists)
+        {
+            LoadHighScore();
+        }
+        else
+        {
+            SaveHighScore();
+        }
+
+        highScoreText.text = string.Concat("HighScore : ", sc.highScore);
     }
 
     public int GetScore()
@@ -76,6 +92,8 @@ public class GameManager : MonoBehaviour
         if (score > sc.highScore)
         {
             sc.highScore = score;
+            SaveHighScore();
+            highScoreText.text = string.Concat("HighScore : ", sc.highScore);
         }
     }
 
@@ -90,15 +108,13 @@ public class GameManager : MonoBehaviour
     public void SaveHighScore()
     {
         string jsonData = JsonUtility.ToJson(sc);
-        string path = Path.Combine(Application.dataPath, "highScore.json");
-        File.WriteAllText(path, jsonData);
+        File.WriteAllText(string.Concat(Application.persistentDataPath, "/Score.txt"), jsonData);
     }
 
     [ContextMenu("Form Json Data")]
     public void LoadHighScore()
     {
-        string path = Path.Combine(Application.dataPath, "highScore.json");
-        string jsonData = File.ReadAllText(path);
+        string jsonData = File.ReadAllText(string.Concat(Application.persistentDataPath, "/Score.txt"));
         sc = JsonUtility.FromJson<ScoreClass>(jsonData);
     }
 }
@@ -106,5 +122,6 @@ public class GameManager : MonoBehaviour
 [System.Serializable]
 public class ScoreClass
 {
+    public bool isFirst = false;
     public int highScore = 0;
 }

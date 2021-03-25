@@ -6,7 +6,7 @@ public class Food : MonoBehaviour
 {
     private FoodPoolManager foodPool = null;
 
-    private void Start()
+    private void Awake()
     {
         foodPool = FindObjectOfType<FoodPoolManager>();
     }
