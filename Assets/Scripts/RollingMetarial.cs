@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class RollingMetarial : PlayerMove
 {
-    protected Vector3 angleAccler = Vector3.zero;
-    protected Vector3 movement = Vector3.zero;
-
     void Update()
     {
 #if UNITY_EDITOR
@@ -15,11 +12,10 @@ public class PlayerMove : MonoBehaviour
         movement.x = Input.GetAxis("Horizontal");
         movement.z = Input.GetAxis("Vertical");
 
-        transform.Translate(movement.x, movement.y, movement.z);
+        transform.rotation = Quaternion.Euler(movement.z * 180 + transform.rotation.z, 0, movement.x * 180 + transform.rotation.x);
 #else
         if (!GameManager.instance.canMovePlayer) return;
 
-        angleAccler = Input.acceleration;
         transform.position += new Vector3(angleAccler.x, 0, angleAccler.y);
 #endif
     }

@@ -56,13 +56,21 @@ public class GameManager : MonoBehaviour
             SaveHighScore();
         }
 
+        canMovePlayer = false;
+
         highScoreText.text = string.Concat("HighScore : ", sc.highScore);
     }
 
     public int GetScore()
     {
         return score;
-    }    
+    }
+
+    public void SetScore(int n)
+    {
+        score = n;
+        scoreText.text = string.Concat("Score : ", score);
+    }
 
     public void MapChange()
     {
@@ -85,6 +93,11 @@ public class GameManager : MonoBehaviour
     public void SetPlayerScale(float scale)
     {
         player.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    public void ResetPlayerPosition()
+    {
+        player.transform.position = new Vector3(0, 4, 0);
     }
 
     public void UpdateHighScore()
