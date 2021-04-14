@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StartButton : MonoBehaviour
 {
-    public void CanPlayerMove()
+    public void StartGame()
     {
-        GameManager.instance.canMovePlayer = true;
+        GameManager.instance.GameStart();
     }
 }

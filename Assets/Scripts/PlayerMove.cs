@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
         if (!GameManager.instance.canMovePlayer) return;
 
         angleAccler = Input.acceleration;
-        transform.position += new Vector3(angleAccler.x, 0, angleAccler.y);
+        transform.position += new Vector3(angleAccler.x * 3, 0, angleAccler.y * 3);
 #endif
     }
 }

@@ -12,11 +12,12 @@ public class RollingMetarial : PlayerMove
         movement.x = Input.GetAxis("Horizontal");
         movement.z = Input.GetAxis("Vertical");
 
-        transform.rotation = Quaternion.Euler(movement.z * 180 + transform.rotation.z, 0, movement.x * 180 + transform.rotation.x);
+        transform.rotation = Quaternion.Euler(transform.rotation.z + movement.z * 180 + transform.rotation.z, 0, transform.rotation.x + movement.x * 180 + transform.rotation.x);
 #else
         if (!GameManager.instance.canMovePlayer) return;
 
-        transform.position += new Vector3(angleAccler.x, 0, angleAccler.y);
+        angleAccler = Input.acceleration;
+        transform.rotation = Quaternion.Euler(transform.rotation.z + angleAccler.z * 180 + transform.rotation.z, 0, transform.rotation.x + angleAccler.x * 180 + transform.rotation.x);
 #endif
     }
 }

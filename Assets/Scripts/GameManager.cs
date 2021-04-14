@@ -15,6 +15,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text highScoreText = null;
 
+    [SerializeField]
+    private GameObject startPanal = null;
+    [SerializeField]
+    private GameObject inGamePanal = null;
+
+    [SerializeField]
+    private Text titleText = null;
+    [SerializeField]
+    private Text startText = null;
+
     private FoodPoolManager foodPool = null;
 
     [Header("플레이어")] [SerializeField]
@@ -39,6 +49,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        Screen.SetResolution(1280, 720, true);
+
         foodPool = FindObjectOfType<FoodPoolManager>();
 
         foodPool.Pooling();
@@ -56,9 +68,29 @@ public class GameManager : MonoBehaviour
             SaveHighScore();
         }
 
+        startPanal.SetActive(true);
+        inGamePanal.SetActive(false);
+
         canMovePlayer = false;
 
         highScoreText.text = string.Concat("HighScore : ", sc.highScore);
+    }
+
+    public void GameStart()
+    {
+        startPanal.SetActive(false);
+        inGamePanal.SetActive(true);
+
+        canMovePlayer = true;
+    }
+
+    public void GameOver()
+    {
+        startPanal.SetActive(true);
+        inGamePanal.SetActive(false);
+
+        titleText.text = "Game Over";
+        startText.text = "Tap to restart";
     }
 
     public int GetScore()

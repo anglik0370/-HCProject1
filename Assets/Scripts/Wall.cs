@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject startUI = null;
-
     private void OnCollisionEnter(Collision col)
     {
         float playerScale = GameManager.instance.GetPlayerScale();
@@ -17,7 +14,7 @@ public class Wall : MonoBehaviour
             GameManager.instance.ResetPlayerPosition();
             GameManager.instance.SetScore(0);
             GameManager.instance.canMovePlayer = false;
-            startUI.SetActive(true);
+            GameManager.instance.GameOver();
         }
         else
         {
